@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+    <entity name="Mentee" syncable="YES">
+        <attribute name="birthday" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="job" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mentorHelp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="solution" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="underservedBackground" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="mentorRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mentor" inverseName="menteeRelationship" inverseEntity="Mentor" syncable="YES"/>
+    </entity>
+    <entity name="Mentor" syncable="YES">
+        <attribute name="careerAdvice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commonTrait" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="job" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mentorRole" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="skillHelp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="underservedBackground" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="menteeRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mentee" inverseName="mentorRelationship" inverseEntity="Mentee" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Mentee" positionX="-135" positionY="-57" width="128" height="180"/>
+        <element name="Mentor" positionX="-126" positionY="-45" width="128" height="180"/>
+    </elements>
+</model>
