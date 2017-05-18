@@ -14,39 +14,52 @@ class BirthdayViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var continueButton: UIButton!
     
-    @IBAction func continuePressed(sender: AnyObject) {
+    var answers = [String : AnyObject]()
+    
+    @IBAction func continuePressed(_ sender: AnyObject) {
         if (textField.text != "") {
-            self.performSegueWithIdentifier("Birthday_Question", sender: self)
+            self.performSegue(withIdentifier: "Birthday_Question", sender: self)
         }
     }
-    
+
     override func viewDidLoad() {
-        datePicker.hidden = true
-        textField.tintColor = UIColor.clearColor()
+        datePicker.isHidden = true
+        textField.tintColor = UIColor.clear
         datePicker.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
     }
     
-    @IBAction func textFieldPressed(sender: AnyObject) {
-        if (datePicker.hidden == true) {
-            datePicker.hidden = false
+    @IBAction func textFieldPressed(_ sender: AnyObject) {
+        if (datePicker.isHidden == true) {
+            datePicker.isHidden = false
             getPickerValue()
         } else {
-            datePicker.hidden = true
+            datePicker.isHidden = true
         }
     }
     
-    @IBAction func pickerChanged(sender: AnyObject) {
+    @IBAction func pickerChanged(_ sender: AnyObject) {
         getPickerValue()
     }
     
     func getPickerValue() {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        dateFormatter.dateStyle = DateFormatter.Style.long
+        dateFormatter.timeStyle = DateFormatter.Style.none
         
-        let strDate = dateFormatter.stringFromDate(datePicker.date)
+        let strDate = dateFormatter.string(from: datePicker.date)
         textField.text = strDate
+//        let ref = FirebaseAPI()
+//        ref.addUser(first: (mentee?.first)!,last: (mentee?.last)!,email: (mentee?.email)!,password: (mentee?.password)!)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "Birthday_Question" {
+            let intakeController = segue.destination as! IntakeQuestionsViewController
+            answers["birthday"] = textField.text as AnyObject
+            intakeController.answers = answers
+        }
     }
 
 }

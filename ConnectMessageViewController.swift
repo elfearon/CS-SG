@@ -14,21 +14,21 @@ class ConnectMessageViewController: UIViewController {
     
     var previousView = ""
     
-    @IBAction func backPressed(sender: AnyObject) {
+    @IBAction func backPressed(_ sender: AnyObject) {
         if (previousView == "MentorProf") {
-            self.performSegueWithIdentifier("Message_MentorProf", sender: self)
+            self.performSegue(withIdentifier: "Message_MentorProf", sender: self)
         } else if (previousView == "FullProfile") {
-            self.performSegueWithIdentifier("Message_FullProf", sender: self)
+            self.performSegue(withIdentifier: "Message_FullProf", sender: self)
         }
     }
     
-    @IBAction func noThanksPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("Message_Sent", sender: self)
+    @IBAction func noThanksPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "Message_Sent", sender: self)
     }
     
-    @IBAction func sendPressed(sender: AnyObject) {
+    @IBAction func sendPressed(_ sender: AnyObject) {
         //TODO: send message
-        self.performSegueWithIdentifier("Message_Sent", sender: self)
+        self.performSegue(withIdentifier: "Message_Sent", sender: self)
     }
     
     override func viewDidLoad() {

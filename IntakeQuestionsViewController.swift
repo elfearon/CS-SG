@@ -11,7 +11,7 @@ import UIKit
 class IntakeQuestionsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     var numQuestions = 3
-    var answers = [String]()
+    var answers = [String : AnyObject]()
     
     struct Question {
         var title : String
@@ -26,6 +26,7 @@ class IntakeQuestionsViewController: UIViewController, UIPickerViewDelegate, UIP
     
     var currentQuestion : Question?
     var questions : [Question]?
+    var qa_dict = [String:String]()
     
     var questionNum = 0
     
@@ -34,35 +35,45 @@ class IntakeQuestionsViewController: UIViewController, UIPickerViewDelegate, UIP
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var picker: UIPickerView!
     
-    @IBAction func textFieldPressed(sender: AnyObject) {
-        if (picker.hidden == true) {
-            picker.hidden = false
+    @IBAction func textFieldPressed(_ sender: AnyObject) {
+        if (picker.isHidden == true) {
+            picker.isHidden = false
             textField.text = currentQuestion!.answers[0]
         } else {
-            picker.hidden = true
+            picker.isHidden = true
         }
     }
     
-    @IBAction func backPressed(sender: AnyObject) {
+    @IBAction func backPressed(_ sender: AnyObject) {
         questionNum -= 1
         
         if (questionNum >= 0) {
             currentQuestion = questions![questionNum]
         } else {
-            self.performSegueWithIdentifier("Question_Birthday", sender: self)
+            self.performSegue(withIdentifier: "Question_Birthday", sender: self)
         }
         
         loadView()
     }
     
-    @IBAction func continuePressed(sender: AnyObject) {
+    @IBAction func continuePressed(_ sender: AnyObject) {
         questionNum += 1
         
         if (textField.text != "") {
+            
+            switch(questionNum) {
+            case 1:
+                qa_dict["qd"] = textField.text
+            case 2:
+                qa_dict["qe"] = textField.text
+            default: //3
+                qa_dict["qf"] = textField.text
+            }
+            
             if (questionNum < numQuestions) {
                 currentQuestion = questions![questionNum]
             } else {
-                self.performSegueWithIdentifier("Question_Background", sender: self)
+                self.performSegue(withIdentifier: "Question_Background", sender: self)
             }
             
             loadQuestion()
@@ -73,10 +84,10 @@ class IntakeQuestionsViewController: UIViewController, UIPickerViewDelegate, UIP
         question.text = currentQuestion!.title
         explanation.text = currentQuestion!.subtitle
         
-        textField.tintColor = UIColor.clearColor()
+        textField.tintColor = UIColor.clear
         textField.text = ""
         
-        picker.hidden = true
+        picker.isHidden = true
         picker.dataSource = self
         picker.delegate = self
         picker.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
@@ -87,31 +98,36 @@ class IntakeQuestionsViewController: UIViewController, UIPickerViewDelegate, UIP
         
         questions = [subjectQuestion, solutionQuestion, helpQuestion]
         currentQuestion = questions![questionNum]
-        
+
         loadQuestion()
-        
-        for _ in 1...numQuestions {
-            answers.append("")
-        }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "Question_Background" {
+            let underservedController = segue.destination as! UnderservedBackgroundViewController
+            answers["answers"] = qa_dict as AnyObject
+            underservedController.answers = answers
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return currentQuestion!.answers.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return currentQuestion!.answers[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         textField.text = currentQuestion!.answers[row]
     }
 

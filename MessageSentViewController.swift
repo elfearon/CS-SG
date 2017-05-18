@@ -14,8 +14,8 @@ class MessageSentViewController: UIViewController {
     @IBOutlet weak var profilePicture: UIImageView!
     
     
-    @IBAction func closeWindow(sender: AnyObject) {
-        self.performSegueWithIdentifier("MesSent_TabBar", sender: self)
+    @IBAction func closeWindow(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "MesSent_TabBar", sender: self)
     }
 
     

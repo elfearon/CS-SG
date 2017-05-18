@@ -33,24 +33,24 @@ class MentorListTableViewController: UITableViewController {
         //TODO
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath.row >= allMentors.count) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Mentor", forIndexPath: indexPath) as! MentorListCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Mentor", for: indexPath) as! MentorListCell
             //TODO: set values ofr name, job, and company
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Load", forIndexPath: indexPath) as! LoadMoreCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Load", for: indexPath) as! LoadMoreCell
             return cell
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //TODO
         return 0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO
     }
 

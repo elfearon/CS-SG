@@ -19,11 +19,11 @@ class FullMentorProfileViewController: UIViewController {
     var mentorProfile = ""
     var previousView = ""
     
-    @IBAction func backPressed(sender: AnyObject) {
+    @IBAction func backPressed(_ sender: AnyObject) {
         if (previousView == "MentorProfile") {
-            self.performSegueWithIdentifier("FullProf_MentorProf", sender: self)
+            self.performSegue(withIdentifier: "FullProf_MentorProf", sender: self)
         } else if (previousView == "MentorList") {
-            self.performSegueWithIdentifier("FullProf_MentorList", sender: self)
+            self.performSegue(withIdentifier: "FullProf_MentorList", sender: self)
         }
     }
     
@@ -40,9 +40,9 @@ class FullMentorProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FullProf_ConMessage" {
-            let controller = segue.destinationViewController as! ConnectMessageViewController
+            let controller = segue.destination as! ConnectMessageViewController
             controller.previousView = "FullProfile"
         }
     }

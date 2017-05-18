@@ -15,8 +15,8 @@ class MentorListViewController: UIViewController {
     @IBOutlet weak var numberSuggestions: UILabel!
     var previousView = ""
     
-    @IBAction func backPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("MentorList_MentorProf", sender: self)
+    @IBAction func backPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "MentorList_MentorProf", sender: self)
     }
     
     override func viewDidLoad() {
@@ -32,9 +32,9 @@ class MentorListViewController: UIViewController {
         //TODO
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MentorList_FullProf" {
-            let controller = segue.destinationViewController as! FullMentorProfileViewController
+            let controller = segue.destination as! FullMentorProfileViewController
             controller.previousView = "MentorList"
         }
     }

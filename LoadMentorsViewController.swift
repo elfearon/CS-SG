@@ -10,6 +10,8 @@ import UIKit
 
 class LoadMentorsViewController: UIViewController {
 
+    var answers = [String : AnyObject]()
+    
     @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
@@ -18,13 +20,17 @@ class LoadMentorsViewController: UIViewController {
         let UIController = CommonUIElements()
         UIController.setGradientBackground(self, height: nil)
         
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.white
         
-        _ = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(timeToMoveOn), userInfo: nil, repeats: false)
+        _ = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(timeToMoveOn), userInfo: nil, repeats: false)
+        let ref = FirebaseAPI()
+        ref.addUser(dictionary: answers)
     }
     
     func timeToMoveOn() {
-        self.performSegueWithIdentifier("LoadMentor_SugMentor", sender: self)
+        self.performSegue(withIdentifier: "LoadMentor_SugMentor", sender: self)
     }
+    
+    
 
 }
