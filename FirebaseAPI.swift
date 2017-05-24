@@ -66,7 +66,6 @@ class FirebaseAPI {
         var type : String
         var firstName : String
         var lastName : String
-        var phoneNumber : String
         var email : String
         var job : String
         var company : String
@@ -111,36 +110,20 @@ class FirebaseAPI {
 
 //---------------- USERS ------------------
     
-    func addUser_old(first: String, last: String, email: String, password: String) {
-        refUsers = FIRDatabase.database().reference().child("users")
-        print("hello")
-        let key = refUsers.childByAutoId().key
-        refUsers.child(key).setValue(first)
-        refUsers.child(key).child("firstname").setValue(first)
-        refUsers.child(key).child("lastname").setValue(last)
-        refUsers.child(key).child("email").setValue(email)
-        refUsers.child(key).child("password").setValue(password)
-//        refUsers.child(key).child("birthday").setValue(birthday)
-        //TODO: create a new user in the db
-        
-    }
-    
+
     func addUser(dictionary: [String: AnyObject]) {
         refUsers = FIRDatabase.database().reference().child("users")
         let key = refUsers.childByAutoId().key
         refUsers.child(key).setValue(dictionary)
     }
     
-    //alternative: input all data directly into firebase rather than creating struct
-    //put temp info throughout signing on process and then call it once
-    //callback - print and see if user information shows up on a single view
-    
     func updateUsers(user: User) {
         //TODO: update an existing user in the db
     }
     
     func getUser(id: String) {
-        //TODO
+        refUsers = FIRDatabase.database().reference().child("users")
+        refUsers.child(id)
     }
     
     //DONE BUT NOT TESTED
@@ -177,19 +160,19 @@ class FirebaseAPI {
 //        })
 //    }
 //    
-//    //TODO: GET ID
-//    private func makeUserFromDB (c: AnyObject) -> User {
-//        return User(
-//            id: "TEST",
-//            type: c.value!.objectForKey("type") as! String,
-//            first: c.value!.objectForKey("firstname") as! String,
-//            last: c.value!.objectForKey("lastname") as! String,
-//            phone: c.value!.objectForKey("email") as! String,
-//            job: c.value!.objectForKey("job") as! String,
-//            company: c.value!.objectForKey("company") as! String,
-//            location: c.value!.objectForKey("location") as! String,
-//            answers: c.value!.objectForKey("answers") as! [String: Int]
-//    )}
+    //TODO: GET ID
+    private func makeUserFromDB (c: AnyObject) -> User {
+        return User(
+            id: "TEST",
+            type: c.value!.objectForKey("type") as! String,
+            firstName: c.value!.objectForKey("firstname") as! String,
+            lastName: c.value!.objectForKey("lastname") as! String,
+            email: c.value!.objectForKey("email") as! String,
+            job: c.value!.objectForKey("job") as! String,
+            company: c.value!.objectForKey("company") as! String,
+            location: c.value!.objectForKey("location") as! String,
+            answers: c.value!.objectForKey("answers") as! [String: AnyObject]
+    )}
     
     
 //----------- QUESTIONS --------------
