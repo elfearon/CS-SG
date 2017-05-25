@@ -27,24 +27,33 @@ class MentorProfileControllerViewController: UIViewController {
         var image : UIImage
     }
     
+
+//    var mentor = Mentor(name: <#String#>, job: <#String#>, company : <#String#>, location: <#String#>, advice: <#String#>, image : UIImage )
     var mentor = Mentor(name: "Matt Mentor", job: "Product Designer", company: "Switch", location: "San Francisco Bay Area", advice: "Blah blah blah", image: UIImage(named: "images-2.jpg")!)
     
-    @IBAction func namePressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("MentorProf_FullProf", sender: self)
+    @IBAction func namePressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "MentorProf_FullProf", sender: self)
     }
     
-    @IBAction func otherMentorsPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("MentorProf_MentorList", sender: self)
+    @IBAction func otherMentorsPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "MentorProf_MentorList", sender: self)
     }
     
-    @IBAction func connectPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("MentorProf_Message", sender: self)
+    @IBAction func connectPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "MentorProf_Message", sender: self)
     }
 
+    func callback(users: [FirebaseAPI.User]) {
+        //display array of users
+        var firstMentor = users[0]
+        var mentor = Mentor(name: users[0].first_name, job: users[0].job, company: users[0].company, location: users[0].location, advice: users[0].type, image: UIImage(named: "images-2.jpg")!)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        name.setTitle(mentor.name, forState: UIControlState.Normal)
+        let ref = FirebaseAPI()
+        ref.getMentors(callback(users: <#T##[FirebaseAPI.User]#>)) //display first one
+        name.setTitle(mentor.name, for: UIControlState())
         location.text = mentor.location
         job.text = mentor.job + " at " + mentor.company
         adviceBody.text = mentor.advice
@@ -54,7 +63,7 @@ class MentorProfileControllerViewController: UIViewController {
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2
         self.profilePicture.clipsToBounds = true
         self.profilePicture.layer.borderWidth = 3.0
-        self.profilePicture.layer.borderColor = (UIColor.whiteColor()).CGColor
+        self.profilePicture.layer.borderColor = (UIColor.white).cgColor
         
         let UIController = CommonUIElements()
         UIController.setGradientBackground(self, height: nil)
@@ -64,12 +73,12 @@ class MentorProfileControllerViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MentorProf_FullProf" {
-            let controller = segue.destinationViewController as! FullMentorProfileViewController
+            let controller = segue.destination as! FullMentorProfileViewController
             controller.previousView = "MentorProfile"
         } else if segue.identifier == "MentorProf_Message" {
-            let controller = segue.destinationViewController as! ConnectMessageViewController
+            let controller = segue.destination as! ConnectMessageViewController
             controller.previousView = "MentorProf"
         }
     }
